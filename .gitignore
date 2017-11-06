@@ -1,5 +1,12 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+#firebase
+firebase.json
+.firebaserc
+
+#pug
+/src/**/*.html
+
 # compiled output
 /dist
 /tmp

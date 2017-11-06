@@ -1,0 +1,28 @@
+html
+    body
+        mat-toolbar(color='primary')
+            span Test Application
+
+
+            span.example-spacer
+            button(mat-icon-button='', [matMenuTriggerFor]='menu')
+                mat-icon more_vert
+            mat-menu(#menu='matMenu')
+                //button(mat-menu-item='')
+                //    mat-icon dialpad
+                //    span Redial
+                //button(mat-menu-item='', disabled='')
+                //    mat-icon voicemail
+                //    span Check voicemail
+                button(mat-menu-item='')
+                    mat-icon notifications_off
+                    span F*ck you!
+
+        mat-card
+            app-user-profile
+            //.form-container
+            //    mat-form-field(hintLabel='Max 100 characters')
+            //        input(matInput='', #input='', maxlength='100', placeholder='Message')
+            //        mat-hint(align='end') {{input.value?.length || 0}}/100
+            //    mat-form-field
+            //        input(matInput='', #input='', maxlength='10', placeholder='Enter your name')
