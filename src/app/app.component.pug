@@ -1,28 +1,25 @@
 html
     body
         mat-toolbar(color='primary')
-            span Test Application
+            span.appname
+                a((click)="navigateTo('/dashboard')") Test Application
 
 
             span.example-spacer
             button(mat-icon-button='', [matMenuTriggerFor]='menu')
-                mat-icon more_vert
-            mat-menu(#menu='matMenu')
-                //button(mat-menu-item='')
-                //    mat-icon dialpad
-                //    span Redial
-                //button(mat-menu-item='', disabled='')
-                //    mat-icon voicemail
-                //    span Check voicemail
-                button(mat-menu-item='')
-                    mat-icon notifications_off
-                    span F*ck you!
+                .userpanel(*ngIf='user_photo')
+                    .username
+                        | {{ user_name }}
+                    img([src]='user_photo', width='35', height='35')
 
-        mat-card
-            app-user-profile
-            //.form-container
-            //    mat-form-field(hintLabel='Max 100 characters')
-            //        input(matInput='', #input='', maxlength='100', placeholder='Message')
-            //        mat-hint(align='end') {{input.value?.length || 0}}/100
-            //    mat-form-field
-            //        input(matInput='', #input='', maxlength='10', placeholder='Enter your name')
+
+            mat-menu(#menu='matMenu')
+                button(mat-menu-item='', (click)="navigateTo('/profile')")
+                    mat-icon dialpad
+                    span User profile
+                button(mat-menu-item='', (click)='logOut()')
+                    mat-icon exit_to_app
+                    span Logout
+
+
+        router-outlet

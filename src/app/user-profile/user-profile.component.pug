@@ -1,17 +1,18 @@
-div(*ngIf="auth.user | async; then authenticated else guest")
+mat-card
+  div(*ngIf="auth.user | async; then authenticated else guest")
 
-// Guest
-ng-template(#guest='')
-  .guestinfo
-    h3 Hi, GUEST
-    p Login to get started...
-    button(mat-raised-button='', color='primary', (click)='auth.googleLogin()') Connect Google
+  // Guest
+  ng-template(#guest='')
+    .guestinfo
+      h3 Hi, GUEST
+      p Login to get started...
+      button(mat-raised-button='', color='primary', (click)='logIn()') Connect Google
 
-// User logged in
-ng-template(#authenticated='')
-  div.userinfo(*ngIf='auth.user | async as user')
-    img([src]='user.photoURL')
-    .user-content
-      h3 Hi, {{ user.displayName }}
-      p UID: {{ user.uid }}
-      button(mat-raised-button='', color='warn', (click)='auth.signOut()') Logout
+  // User logged in
+  ng-template(#authenticated='')
+    div.userinfo(*ngIf='auth.user | async as user')
+      img([src]='user.photoURL')
+      .user-content
+        h3 Hi, {{ user.displayName }}
+        p UID: {{ user.uid }}
+        button(mat-raised-button='', color='warn', (click)='auth.signOut()') Logout

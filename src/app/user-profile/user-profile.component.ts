@@ -15,4 +15,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
   }
 
+  logIn() {
+    this.auth.googleLogin();
+  }
 }

@@ -1,0 +1,18 @@
+mat-card
+    form.form-container
+        mat-form-field(hintLabel='Max 200 characters')
+            input(matInput='', #input='', maxlength='200', placeholder='Message', name='message', [(ngModel)]="message")
+            mat-hint(align='end') {{input.value?.length || 0}}/200
+        button(mat-raised-button, color="primary", type="submit", (click)="addMessage()")
+            | Send
+            mat-icon send
+
+    mat-list.posts
+        .post-card(*ngFor="let msg of messages | async")
+            .messages
+                img([src]='msg.photoURL', width='35', height='35')
+                .message-content
+                    h4(mat-line='') {{ msg.message }}
+                    p(mat-line='') {{ msg.date }}
+                    //p(mat-line='')
+            mat-divider

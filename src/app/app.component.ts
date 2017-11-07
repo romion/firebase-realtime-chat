@@ -1,10 +1,6 @@
-import { Component } from '@angular/core';
-// import { MatCardModule } from '@angular/material';
-// import { AngularFireAuth } from 'angularfire2/auth';
-// import { AngularFireDatabase } from 'angularfire2/database';
-// import { Observable } from 'rxjs/Observable';
-
-
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './core/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +8,39 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 
-export class AppComponent {
-  title = 'Ololo';
+export class AppComponent implements OnInit {
 
-  constructor() {}
+  user_name = '';
+  user_photo = '';
+
+  constructor(
+    public auth: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.getUserInfo();
+  }
+
+  getUserInfo() {
+    this.auth.user.subscribe(val => {
+      if (val) {
+        this.user_name = val.displayName;
+        this.user_photo = val.photoURL;
+      } else {
+        this.user_name = '';
+        this.user_photo = '';
+      }
+    });
+  }
+
+  navigateTo(route) {
+    this.router.navigate([route]);
+  }
+
+  logOut() {
+    this.router.navigate(['/profile']);
+    this.auth.signOut();
+  }
+
 }

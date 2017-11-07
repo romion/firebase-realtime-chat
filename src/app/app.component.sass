@@ -1,13 +1,28 @@
-.example-icon
-  padding: 0 14px
+mat-toolbar
+  .appname
+    a
+      cursor: pointer
+      &:hover
+        color: #ffffff
+  .example-icon
+    padding: 0 14px
+  .example-spacer
+    flex: 1 1 auto
+  .userpanel
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    margin-right: 20px
+    img
+      width: 35px
+      height: 35px
+      -webkit-border-radius: 50%
+      -moz-border-radius: 50%
+      border-radius: 50%
+      margin-left: 10px
 
-.example-spacer
-  flex: 1 1 auto
-
-.form-container
-  display: flex
-  flex-direction: column
-  mat-form-field
-    width: 100%
-    &:nth-child(1)
-      margin-bottom: 20px
+@media (max-width: 420px)
+  mat-toolbar
+    .userpanel
+      .username
+        display: none
