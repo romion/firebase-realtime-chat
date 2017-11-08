@@ -3,6 +3,7 @@ import { AuthService } from '../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import * as firebase from "firebase";
 
 interface Post {
   message: string;
@@ -70,6 +71,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addMessage() {
+    // console.log(firebase.database.ServerValue.TIMESTAMP);
     this.afs.collection('messages').add({
       'message': this.message,
       'uid': this.uid,
@@ -95,8 +97,7 @@ export class DashboardComponent implements OnInit {
       console.log('Finish editing: ' + msg.msg_id);
       this.editingMode = 0;
       this.afs.collection('messages').doc(msg.msg_id).update({
-        'message': msg.message,
-        'date': new Date()
+        'message': msg.message
       });
     }
   }
