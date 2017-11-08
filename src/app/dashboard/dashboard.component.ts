@@ -3,7 +3,6 @@ import { AuthService } from '../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {UserProfileComponent} from "../user-profile/user-profile.component";
 
 interface Post {
   message: string;
@@ -59,7 +58,6 @@ export class DashboardComponent implements OnInit {
 
     this.test = this.messages.map(function(msg) {
       console.log(msg);
-      // return msg.message += 'LOL';
     });
   }
 
@@ -68,8 +66,17 @@ export class DashboardComponent implements OnInit {
       'message': this.message,
       'uid': this.uid,
       'date': new Date()
+    }).then((docRef) => {
+      this.afs.collection('messages').doc(docRef.id).update({
+        msg_id: docRef.id
+      });
     });
     this.message = '';
+  }
+
+  deleteMessage(msg) {
+    console.log('Deleting: ' + msg.msg_id);
+    this.afs.collection('messages').doc(msg.msg_id).delete();
   }
 
   getUid() {

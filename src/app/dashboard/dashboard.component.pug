@@ -15,4 +15,7 @@ mat-card
                     h4(mat-line='') {{ msg.message }}
                     p(mat-line='') {{ msg.date }}
                     //p(mat-line='')
+                .tools
+                    button(mat-icon-button color="warn")
+                        mat-icon(aria-label="Delete message", (click)="deleteMessage(msg)") delete
             mat-divider
