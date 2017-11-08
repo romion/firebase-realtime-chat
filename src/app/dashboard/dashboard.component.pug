@@ -10,12 +10,18 @@ mat-card
     mat-list.posts
         .post-card(*ngFor="let msg of messages | async")
             .messages
-                img([src]='msg.photoURL', width='35', height='35')
-                .message-content
-                    h4(mat-line='') {{ msg.message }}
-                    p(mat-line='') {{ msg.date }}
-                    //p(mat-line='')
+                .msg-container
+                    img([src]='msg.photoURL', width='35', height='35')
+                    .message-content
+                        h4(*ngIf="!(editingMode == msg.msg_id)", mat-line='') {{ msg.message }}
+                        form.editMsgForm(*ngIf="editingMode == msg.msg_id", (ngSubmit)="editMessage(msg)")
+                            mat-form-field.editing-full-width
+                                input(*ngIf="editingMode == msg.msg_id", matInput='', [(ngModel)]='msg.message', [ngModelOptions]="{standalone: true}")
+                        p(mat-line='') {{ msg.date }}
+                        //p(mat-line='')
                 .tools
-                    button(mat-icon-button color="warn")
-                        mat-icon(aria-label="Delete message", (click)="deleteMessage(msg)") delete
+                    button(mat-icon-button color="primary", *ngIf="msg.personal", (click)="editMessage(msg)")
+                        mat-icon(aria-label="Delete message") edit
+                    button(mat-icon-button color="warn", *ngIf="msg.personal", (click)="deleteMessage(msg)")
+                        mat-icon(aria-label="Delete message") delete
             mat-divider

@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   test;
 
   message: string;
+  editingMode = 0;
   uid = '';
 
   constructor(
@@ -49,7 +50,14 @@ export class DashboardComponent implements OnInit {
         // FIND USER WITH UID AND GET HIS PHOTO
         that.afs.collection('users').doc(msg.uid).valueChanges().subscribe(user => {
           msg['photoURL'] = user['photoURL'];
-          // console.log(msg);
+        });
+        // Finding personal messages
+        that.auth.user.subscribe(val => {
+          if (msg['uid'] === val.uid) {
+            msg['personal'] = true;
+          } else {
+            msg['personal'] = false;
+          }
         });
       });
     });
@@ -79,6 +87,20 @@ export class DashboardComponent implements OnInit {
     this.afs.collection('messages').doc(msg.msg_id).delete();
   }
 
+  editMessage(msg) {
+    if (!this.editingMode) {
+      console.log('Start editing: ' + msg.msg_id);
+      this.editingMode = msg.msg_id;
+    } else {
+      console.log('Finish editing: ' + msg.msg_id);
+      this.editingMode = 0;
+      this.afs.collection('messages').doc(msg.msg_id).update({
+        'message': msg.message,
+        'date': new Date()
+      });
+    }
+  }
+
   getUid() {
     this.auth.user.subscribe(val => {
       if (val) {
@@ -87,14 +109,5 @@ export class DashboardComponent implements OnInit {
         this.uid = '';
       }
     });
-  }
-
-  findUserINfo(uid: string) {
-    console.log('get info : ' + uid);
-    this.afs.collection('users', ref => ref.where('uid', '==', uid))
-      .valueChanges()
-      // .map(res => console.log(res));
-      .subscribe(res => { return res; });
-
   }
 }
